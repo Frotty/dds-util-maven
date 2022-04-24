@@ -20,7 +20,7 @@
             <artifactId>Squish</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/jsquish.jar</systemPath>
+            <systemPath>${pom.basedir}/lib/jsquish.jar</systemPath>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/junit/junit -->
