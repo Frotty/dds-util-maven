@@ -3,8 +3,8 @@
  */
 package model;
 
+import com.github.memo33.jsquish.Squish;
 import ddsutil.*;
-import gr.zdimensions.jsquish.Squish;
 import jogl.DDSImage;
 
 import java.awt.*;

@@ -3,8 +3,7 @@
  */
 package compression;
 
-import gr.zdimensions.jsquish.Squish;
-import gr.zdimensions.jsquish.Squish.CompressionType;
+import com.github.memo33.jsquish.Squish;
 
 import java.awt.*;
 import java.nio.ByteBuffer;
@@ -17,7 +16,7 @@ import java.nio.ByteBuffer;
  */
 public class DXTBufferDecompressor extends BufferDecompressor{
 
-	protected CompressionType compressionType;
+	protected Squish.CompressionType compressionType;
 	
 
 	/**
@@ -27,7 +26,7 @@ public class DXTBufferDecompressor extends BufferDecompressor{
 	 * @param pixelformat
 	 */
 	public DXTBufferDecompressor(final ByteBuffer compressedBuffer, 
-			final int width, final int height, CompressionType type) {
+			final int width, final int height, Squish.CompressionType type) {
 		this(compressedBuffer, new Dimension(width, height), type);
 	}
 	
@@ -39,7 +38,7 @@ public class DXTBufferDecompressor extends BufferDecompressor{
 	 * @param compressionType
 	 */
 	public DXTBufferDecompressor(byte[] compressedData, int width, int height,
-			CompressionType compressionType) {
+			Squish.CompressionType compressionType) {
 		this(ByteBuffer.wrap(compressedData), new Dimension(width, height), compressionType);
 	}
 	
@@ -49,7 +48,7 @@ public class DXTBufferDecompressor extends BufferDecompressor{
 	 * @param type 
 	 */
 	public DXTBufferDecompressor(final ByteBuffer compressedBuffer, 
-			final Dimension dimension, CompressionType type) {
+			final Dimension dimension, Squish.CompressionType type) {
 		this.uncompressedBuffer = 
 			squishDecompressBuffer(compressedBuffer, dimension.width, dimension.height, type);
 		this.dimension = dimension;
@@ -63,7 +62,7 @@ public class DXTBufferDecompressor extends BufferDecompressor{
 	 * If the type is null, it returns the uncompressed ByteBuffer.
 	 * 
 	 * Decompresses a DXT-compressed Byte-Array and returns a byte-Array.
-	 * If the {@link CompressionType} is null, it return the source data.
+	 * If the {@link Squish.CompressionType} is null, it return the source data.
 	 * @param compressedData
 	 * @param width
 	 * @param height
@@ -72,7 +71,7 @@ public class DXTBufferDecompressor extends BufferDecompressor{
 	 * @throws OutOfMemoryError
 	 */
 	public static byte[] squishDecompressToArray(final byte[] compressedData, final int width, final int height,
-			final CompressionType type) throws OutOfMemoryError {
+			final Squish.CompressionType type) throws OutOfMemoryError {
 
 		//Use JSquish to decompress images. Then bind as normal. 
 		if (type != null) {
@@ -88,7 +87,7 @@ public class DXTBufferDecompressor extends BufferDecompressor{
 	
 	/**
 	 * Decompresses a DXT-compressed Byte-Array and returns a ByteBuffer
-	 * If the {@link CompressionType} is null, it return the source data
+	 * If the {@link Squish.CompressionType} is null, it return the source data
 	 * @param compressedData
 	 * @param width
 	 * @param height
@@ -97,7 +96,7 @@ public class DXTBufferDecompressor extends BufferDecompressor{
 	 * @throws OutOfMemoryError
 	 */
 	public static ByteBuffer squishDecompress(final byte[] compressedData, final int width, final int height,
-			final CompressionType type) throws OutOfMemoryError {
+			final Squish.CompressionType type) throws OutOfMemoryError {
 		
 		return ByteBuffer.wrap(squishDecompressToArray(compressedData, width, height, type));
 	} 
@@ -115,7 +114,7 @@ public class DXTBufferDecompressor extends BufferDecompressor{
 	 */
 	private static ByteBuffer squishDecompressBuffer(final ByteBuffer byteBuffer, 
 			final int width, final int height,
-			final CompressionType type) throws OutOfMemoryError {
+			final Squish.CompressionType type) throws OutOfMemoryError {
 		
 		byte[] data = new byte[byteBuffer.capacity()]; 
 		byteBuffer.get(data); 

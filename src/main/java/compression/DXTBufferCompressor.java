@@ -3,9 +3,8 @@
  */
 package compression;
 
+import com.github.memo33.jsquish.Squish;
 import ddsutil.ByteBufferedImage;
-import gr.zdimensions.jsquish.Squish;
-import gr.zdimensions.jsquish.Squish.CompressionType;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -24,7 +23,7 @@ public class DXTBufferCompressor {
 	protected byte[] byteData;
 	protected int[] intData;
 	protected Dimension dimension;
-	protected CompressionType compressionType;
+	protected Squish.CompressionType compressionType;
 	
 	/**
 	 * @param data Byte-Array should store ARGB
@@ -35,7 +34,7 @@ public class DXTBufferCompressor {
 	public DXTBufferCompressor(final byte[] data, 
 			final int width, 
 			final int height, 
-			final CompressionType compressionType) {
+			final Squish.CompressionType compressionType) {
 		this(data, new Dimension(width, height), compressionType);
 	}
 	
@@ -48,7 +47,7 @@ public class DXTBufferCompressor {
 	public DXTBufferCompressor(final ByteBuffer byteBuffer, 
 			final int width, 
 			final int height, 
-			final CompressionType compressionType) {
+			final Squish.CompressionType compressionType) {
 		this(toByteArray(byteBuffer), 
 				new Dimension(width, height), 
 				compressionType);
@@ -60,7 +59,7 @@ public class DXTBufferCompressor {
 	 * @param compressionType
 	 */
 	public DXTBufferCompressor(final BufferedImage image, 
-			final CompressionType compressionType) {
+			final Squish.CompressionType compressionType) {
 		
 		this(ByteBufferedImage.convertBIintoARGBArray((BufferedImage) image),
 				new Dimension(image.getWidth(null), image.getHeight(null)),
@@ -74,7 +73,7 @@ public class DXTBufferCompressor {
 	 */
 	public DXTBufferCompressor(final byte[] data, 
 			final Dimension dimension, 
-			final CompressionType compressionType) {
+			final Squish.CompressionType compressionType) {
 		this.byteData = data;
 		this.dimension = dimension;
 		this.compressionType = compressionType;
@@ -87,7 +86,7 @@ public class DXTBufferCompressor {
 	 */
 	public DXTBufferCompressor(final int[] data, 
 			final Dimension dimension, 
-			final CompressionType compressionType) {
+			final Squish.CompressionType compressionType) {
 		this.intData = data;
 		this.dimension = dimension;
 		this.compressionType = compressionType;
@@ -184,7 +183,7 @@ public class DXTBufferCompressor {
 	private static byte[] squishCompressToArray(final byte[] rgba, 
 			final int width, 
 			final int height, 
-			final CompressionType compressionType) throws DataFormatException {
+			final Squish.CompressionType compressionType) throws DataFormatException {
 		
 		// expected array length
 		int length = width * height * 4;
@@ -201,25 +200,25 @@ public class DXTBufferCompressor {
 				Squish.CompressionMethod.CLUSTER_FIT);
 	} 
 	
-	private static byte[] squishCompressToArray(final int[] rgba, 
-			final int width, 
-			final int height, 
-			final CompressionType compressionType) throws DataFormatException {
-		
-		// expected array length
-		int length = width * height;
-		if (rgba.length != length) throw new DataFormatException("unexpected length:" + 
-				rgba.length +  " instead of "+ length);
-		
-		int storageRequirements = Squish.getStorageRequirements(width, height, compressionType);
-		
-		return Squish.compressImage(rgba, 
-				width, 
-				height, 
-				new byte[storageRequirements], 
-				compressionType, 
-				Squish.CompressionMethod.CLUSTER_FIT);
-	} 
+//	private static byte[] squishCompressToArray(final int[] rgba,
+//			final int width,
+//			final int height,
+//			final Squish.CompressionType compressionType) throws DataFormatException {
+//
+//		// expected array length
+//		int length = width * height;
+//		if (rgba.length != length) throw new DataFormatException("unexpected length:" +
+//				rgba.length +  " instead of "+ length);
+//
+//		int storageRequirements = Squish.getStorageRequirements(width, height, compressionType);
+//
+//		return Squish.compressImage(rgba,
+//				width,
+//				height,
+//				new byte[storageRequirements],
+//				compressionType,
+//				Squish.CompressionMethod.CLUSTER_FIT);
+//	}
 	
 	
 	/**
@@ -259,7 +258,7 @@ public class DXTBufferCompressor {
 	 * @return
 	 */
 	public static int getStorageRequirements(final int width, final int height, 
-			final CompressionType type) {
+			final Squish.CompressionType type) {
 		return Squish.getStorageRequirements(width, height, type);
 	}
 	
@@ -270,7 +269,7 @@ public class DXTBufferCompressor {
 	 * @return
 	 */
 	public static int getStorageRequirements(final Dimension imageDimension, 
-			final CompressionType type) {
+			final Squish.CompressionType type) {
 		return Squish.getStorageRequirements((int)imageDimension.getWidth(), (int)imageDimension.getHeight(), type);
 	}
 	

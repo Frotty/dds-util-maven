@@ -3,9 +3,9 @@
  */
 package model;
 
+import com.github.memo33.jsquish.Squish;
 import compression.DXTBufferCompressor;
 import ddsutil.PixelFormats;
-import gr.zdimensions.jsquish.Squish.CompressionType;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 
@@ -23,7 +23,7 @@ public abstract class AbstractTextureMap implements TextureMap {
 	@Override
 	public ByteBuffer[] getDXTCompressedBuffer(final int pixelformat) 
 			throws Exception {
-		CompressionType compressionType = PixelFormats.getSquishCompressionFormat(pixelformat);
+		Squish.CompressionType compressionType = PixelFormats.getSquishCompressionFormat(pixelformat);
 		return this.getDXTCompressedBuffer(compressionType );
 	}
 	
@@ -34,7 +34,7 @@ public abstract class AbstractTextureMap implements TextureMap {
 	 */
 	@Override
 	public ByteBuffer compress(final BufferedImage bi, 
-			final CompressionType compressionType) {
+			final Squish.CompressionType compressionType) {
 		DXTBufferCompressor compi = new DXTBufferCompressor(bi, compressionType);
 		return compi.getByteBuffer();
 	}

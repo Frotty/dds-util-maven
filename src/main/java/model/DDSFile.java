@@ -4,12 +4,12 @@ package model;
  * 
  */
 
+import com.github.memo33.jsquish.Squish;
 import compression.ARGBBufferDecompressor;
 import compression.BufferDecompressor;
 import compression.DXTBufferDecompressor;
 import ddsutil.MipMapsUtil;
 import ddsutil.PixelFormats;
-import gr.zdimensions.jsquish.Squish.CompressionType;
 import jogl.DDSImage;
 
 import java.awt.image.BufferedImage;
@@ -123,7 +123,7 @@ public class DDSFile extends AbstractTextureImage{
 			
 			BufferDecompressor bufferDecompressor;
 			if(isCompressed()) {
-				CompressionType compressionType = 
+				Squish.CompressionType compressionType =
 						PixelFormats.getSquishCompressionFormat(ddsimage.getPixelFormat());
 				bufferDecompressor = new DXTBufferDecompressor(
 						data,

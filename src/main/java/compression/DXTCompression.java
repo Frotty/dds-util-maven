@@ -3,7 +3,7 @@
  */
 package compression;
 
-import gr.zdimensions.jsquish.Squish;
+import com.github.memo33.jsquish.Squish;
 
 import java.awt.*;
 import java.nio.ByteBuffer;

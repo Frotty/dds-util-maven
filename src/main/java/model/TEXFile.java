@@ -1,8 +1,8 @@
 package model;
 
+import com.github.memo33.jsquish.Squish;
 import compression.DXTBufferDecompressor;
 import ddsutil.PixelFormats;
-import gr.zdimensions.jsquish.Squish.CompressionType;
 import jogl.DDSImage;
 import jogl.TEXImage;
 
@@ -113,7 +113,7 @@ public class TEXFile  extends AbstractTextureImage {
 
 	@Override
 	public void loadImageData() throws Exception {
-		CompressionType compressionType = 
+		Squish.CompressionType compressionType =
 			PixelFormats.getSquishCompressionFormat(teximage.getPixelFormat());
 		this.mipMaps.setMipMap(0, new DXTBufferDecompressor(
 				teximage.getEmbeddedMaps(0).getMipMap(0).getData(),

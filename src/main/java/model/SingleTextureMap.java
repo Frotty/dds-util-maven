@@ -3,8 +3,8 @@
  */
 package model;
 
+import com.github.memo33.jsquish.Squish;
 import ddsutil.ByteBufferedImage;
-import gr.zdimensions.jsquish.Squish.CompressionType;
 
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
@@ -38,7 +38,7 @@ public class SingleTextureMap extends AbstractTextureMap {
 	 * @see ddsutil.DDSUtil.AbstractMipMaps#getDXTCompressedBuffer(gr.zdimensions.jsquish.Squish.CompressionType)
 	 */
 	@Override
-	public ByteBuffer[] getDXTCompressedBuffer(final CompressionType compressionType) {
+	public ByteBuffer[] getDXTCompressedBuffer(final Squish.CompressionType compressionType) {
 		ByteBuffer[] buffer = new ByteBuffer[1];
 		buffer[0] = super.compress(bi, compressionType);
 		return buffer;

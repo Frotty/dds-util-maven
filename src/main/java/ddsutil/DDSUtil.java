@@ -1,9 +1,9 @@
 package ddsutil;
 
 
+import com.github.memo33.jsquish.Squish;
 import compression.DXTBufferCompressor;
 import compression.DXTBufferDecompressor;
-import gr.zdimensions.jsquish.Squish;
 import jogl.DDSImage;
 import jogl.TEXImage;
 import model.TextureMap;
