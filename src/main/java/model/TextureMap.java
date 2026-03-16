@@ -1,6 +1,6 @@
 package model;
 
-import com.github.memo33.jsquish.Squish;
+import io.github.memo33.jsquish.Squish;
 
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;

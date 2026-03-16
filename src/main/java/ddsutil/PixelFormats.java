@@ -1,6 +1,6 @@
 package ddsutil;
 
-import com.github.memo33.jsquish.Squish;
+import io.github.memo33.jsquish.Squish;
 import jogl.DDSImage;
 import model.TextureImage.PixelFormat;
 

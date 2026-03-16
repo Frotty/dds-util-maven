@@ -3,7 +3,7 @@
  */
 package model;
 
-import com.github.memo33.jsquish.Squish;
+import io.github.memo33.jsquish.Squish;
 import compression.DXTBufferCompressor;
 import ddsutil.PixelFormats;
 import java.awt.image.BufferedImage;

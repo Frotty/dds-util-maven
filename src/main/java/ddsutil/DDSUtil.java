@@ -1,7 +1,7 @@
 package ddsutil;
 
 
-import com.github.memo33.jsquish.Squish;
+import io.github.memo33.jsquish.Squish;
 import compression.DXTBufferCompressor;
 import compression.DXTBufferDecompressor;
 import jogl.DDSImage;
