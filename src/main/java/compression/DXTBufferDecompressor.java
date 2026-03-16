@@ -117,7 +117,9 @@ public class DXTBufferDecompressor extends BufferDecompressor{
 			final Squish.CompressionType type) throws OutOfMemoryError {
 		
 		byte[] data = new byte[byteBuffer.capacity()]; 
-		byteBuffer.get(data); 
+		ByteBuffer copy = byteBuffer.duplicate();
+		copy.clear();
+		copy.get(data); 
 		 
 		return squishDecompress(data, width, height, type);
 	} 

@@ -102,7 +102,9 @@ public class DXTCompression {
 			final int width ,final int height, final Squish.CompressionType compressionType) {
 		
 		byte[] rgba = new byte[bytebuffer.capacity()]; 
-		bytebuffer.get(rgba);
+		ByteBuffer copy = bytebuffer.duplicate();
+		copy.clear();
+		copy.get(rgba);
 		return squishCompress(rgba, width, height, compressionType);
 	}
 	

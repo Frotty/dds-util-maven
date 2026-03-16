@@ -45,7 +45,7 @@ public class DDSFile extends AbstractTextureImage{
 		try {
 			init(DDSImage.read(file));
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new IllegalStateException("Failed to read DDS file: " + file, e);
 		}
 	}
 	
@@ -202,12 +202,17 @@ public class DDSFile extends AbstractTextureImage{
 	
 	public void write(final File targetFile) throws IOException {
 		ByteBuffer[] mipmaps = new ByteBuffer[getNumMipMaps()];
-		for (int i = 0; i < mipmaps.length; i++) {
-			mipmaps[i] = DDSImage.read(this.file).getMipMap(i).getData();
+		DDSImage source = DDSImage.read(this.file);
+		try {
+			for (int i = 0; i < mipmaps.length; i++) {
+				mipmaps[i] = source.getMipMap(i).getData();
+			}
+		} finally {
+			source.close();
 		}
 		
 		DDSImage outputDDS = DDSImage.createFromData(this.pixelformat, width, height, mipmaps);
-		outputDDS.write(file);
+		outputDDS.write(targetFile);
 		outputDDS.close();
 	}
 	

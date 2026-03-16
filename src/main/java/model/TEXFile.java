@@ -39,7 +39,7 @@ public class TEXFile  extends AbstractTextureImage {
 			teximage = TEXImage.read(file);
 			init(teximage);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new IllegalStateException("Failed to read TEX file: " + file, e);
 		}
 	}
 	
@@ -60,9 +60,14 @@ public class TEXFile  extends AbstractTextureImage {
 	@Override
 	public void write(final File file) throws IOException {
 		ByteBuffer[] mipmaps = new ByteBuffer[getNumMipMaps()];
-		for (int i = 0; i < mipmaps.length; i++) {
-			DDSImage image = TEXImage.read(this.file).getAllEmbeddedMaps().get(i);
-			mipmaps[i] = image.getAllMipMaps()[0].getData();
+		TEXImage source = TEXImage.read(this.file);
+		try {
+			for (int i = 0; i < mipmaps.length; i++) {
+				DDSImage image = source.getAllEmbeddedMaps().get(i);
+				mipmaps[i] = image.getAllMipMaps()[0].getData();
+			}
+		} finally {
+			source.close();
 		}
 		
 		TEXImage outputTEX = TEXImage.createFromData(this.pixelformat, width, height, mipmaps);

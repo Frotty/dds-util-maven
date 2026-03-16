@@ -97,23 +97,17 @@ public class DXTBufferCompressor {
 	 * @return ByteBuffer
 	 */
 	public ByteBuffer getByteBuffer() {
-		byte[] compressedData;
 		try {
-			
-			// the data-Array given to the squishCompressToArray is expected to be
-			// width * height * 4 -> with RGBA, which means, if we got RGB, we need to add A!
-			if(byteData.length < dimension.height*dimension.width*4) {
-				System.out.println("blow up array from RGB to ARGB");
+			// the data-Array given to squishCompressToArray is expected to be RGBA (4 bytes per pixel)
+			if(byteData.length < dimension.height * dimension.width * 4) {
 				byteData = convertRGBArraytiRGBAArray(byteData, dimension);
 			}
 			
-			compressedData = squishCompressToArray(byteData, dimension.width, dimension.height, compressionType);
+			byte[] compressedData = squishCompressToArray(byteData, dimension.width, dimension.height, compressionType);
 			return ByteBuffer.wrap(compressedData);
 		} catch (DataFormatException e) {
-			e.printStackTrace();
+			throw new IllegalStateException("Failed to compress texture buffer", e);
 		}
-		return null;
-		
 	}
 	
 	private byte[] convertRGBArraytiRGBAArray(byte[] data, final Dimension dimension) {
@@ -132,6 +126,7 @@ public class DXTBufferCompressor {
 			int destPos = i+loopN;
 			
 			System.arraycopy(data, srcPos, rgbaBuffer, destPos, 3);
+			rgbaBuffer[destPos + 3] = (byte) 0xFF;
 			loopN++;
 		}
 		
@@ -147,9 +142,8 @@ public class DXTBufferCompressor {
 		try {
 			return squishCompressToArray(byteData, dimension.width, dimension.height, compressionType);
 		} catch (final DataFormatException e) {
-			e.printStackTrace();
+			throw new IllegalStateException("Failed to compress texture buffer", e);
 		}
-		return byteData;
 	}
 
 	/**
@@ -238,7 +232,9 @@ public class DXTBufferCompressor {
 
 	private static byte[] toByteArray(final ByteBuffer bytebuffer) {
 		byte[] rgba = new byte[bytebuffer.capacity()];
-		bytebuffer.get(rgba);
+		ByteBuffer copy = bytebuffer.duplicate();
+		copy.clear();
+		copy.get(rgba);
 		return rgba;
 	}
 	

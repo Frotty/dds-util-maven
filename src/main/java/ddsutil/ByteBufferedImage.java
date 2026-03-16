@@ -83,7 +83,6 @@ public class ByteBufferedImage extends BufferedImage {
 	        DataBufferInt dbi = (DataBufferInt) db;
 	        return dbi.getData();
 	    }
-		System.err.println("db is of type " + db.getClass());
 		return null;
 	}
 

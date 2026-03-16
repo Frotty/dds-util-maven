@@ -10,9 +10,9 @@ import jogl.DDSImage;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 
 /**
@@ -46,7 +46,7 @@ public class MipMaps extends AbstractTextureMap implements Iterable<BufferedImag
 	public MipMaps(final int numMipMaps) {
 		this.numMipMaps = numMipMaps;
 		this.rescaler = new ImageRescaler();
-		this.mipmaps = new Vector<BufferedImage>(numMipMaps);
+		this.mipmaps = new ArrayList<BufferedImage>(numMipMaps);
 	}
 	
 	/**
@@ -55,7 +55,6 @@ public class MipMaps extends AbstractTextureMap implements Iterable<BufferedImag
 	 */
 	public void generateMipMaps(BufferedImage topmost) {
 		addMipMap(topmost);
-		System.out.println("Generate Mipmaps");
 		
 		if(!DDSFile.isPowerOfTwo(topmost.getWidth()) 
 				&& !DDSFile.isPowerOfTwo(topmost.getHeight())) 
@@ -160,7 +159,6 @@ public class MipMaps extends AbstractTextureMap implements Iterable<BufferedImag
 		ByteBuffer[] mipmapBuffer = new ByteBuffer[this.numMipMaps];
 		
 		for (int j = 0; j < this.numMipMaps; j++) {
-			System.out.println("compress mipmap " + j);
 			mipmapBuffer[j] = compress(getMipMap(j), compressionType);
 		}
 		return mipmapBuffer;
